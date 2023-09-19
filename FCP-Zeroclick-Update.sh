@@ -7,8 +7,8 @@ FRAGMENTED_PDF_PAYLOAD="/tmp/fragmented_pdf_payload"
 
 # Functions
 function generate_pdf_payload() {
-  # Generate PDF payload using pdftk
-  pdftk "" output "$pdf_payload"
+  # Combine the two PDF files into one
+  pdftk "$pdf_file_1" "$pdf_file_2" output "$pdf_payload"
 
   # Add the scrcpy command to the PDF payload
   pdftk "$pdf_payload" insert "scrcpy -d $(get_device_id) --background --auto-connect yes" output "$pdf_payload"
@@ -26,7 +26,7 @@ function fragment_pdf_payload() {
   fragmented_pdf_payload="/tmp/fragmented_pdf_payload"
 
   # Send the PDF payload to a local port in small chunks
-  nc -u localhost 8080 < "$pdf_payload"
+  nc -l localhost 8080 < "$pdf_payload"
 
   # Listen for the fragmented PDF payload on the local port and write it to the temporary file
   nc -l -u 8080 > "$fragmented_pdf_payload"
@@ -50,6 +50,10 @@ if ! adb devices | grep -q device; then
   echo "No Android device is connected. Please connect an Android device before running this script."
   exit 1
 fi
+
+# Get the two PDF files to combine
+pdf_file_1="/path/to/pdf_file_1.pdf"
+pdf_file_2="/path/to/pdf_file_2.pdf"
 
 # Generate the PDF payload
 generate_pdf_payload
