@@ -1,4 +1,5 @@
 #!/bin/bash
+
 figlet -c purple "ANDROID FCP-Zeroclick"
 
 # Variables
