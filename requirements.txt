@@ -1,0 +1,6 @@
+figlet
+ngrok
+pdftk
+openssl
+nc
+openvpn
