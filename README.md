@@ -1,14 +1,25 @@
-# Android-FCP-Zeroclick
- The code first creates a ngrok tunnel that listens on port 8080. The ngrok tunnel URL is then retrieved and stored in the variable tunnel_url.
+ANDROID FCP-Zeroclick
+This bash script automates the process of remotely controlling an Android device using scrcpy and ngrok. It creates a fragmented PDF payload that contains the scrcpy command and encrypts it with a secret key. The script then starts ngrok to create a tunnel to the local port where the fragmented PDF payload is being served. Finally, the script opens the fragmented PDF file automatically in the background.
 
-Next, a PDF payload file is created. This file will contain a command that will be executed when the PDF file is opened. The command is written to a text file, and the text file is then converted to a PDF file using the pdftk command.
-
-The PDF file is then opened in the background using the xdg-open command. The & character is added to the command so that the PDF file is opened in the background. This prevents the script from waiting for the PDF file to close before continuing.
-
-Finally, the ngrok tunnel URL is printed to the terminal. The scrcpy command is then used to open the PDF file in a remote device and display it on your screen.
-
+Usage
+./FCP-Zeroclick-Update.sh
 Requirements
+ngrok
+scrcpy
+openvpn (optional)
+Instructions
+Replace the YOUR_SECRET_KEY placeholder in the script with your own secret key.
+Replace the YOUR_VPN_CONFIG_FILE placeholder in the script with the path to your VPN configuration file, if you are using a VPN.
+Make sure that the two PDF files that you want to combine are located in the paths specified by the pdf_file_1 and pdf_file_2 variables.
+Run the script.
+Example
+./FCP-Zeroclick-Update.sh
+This will create a fragmented PDF payload containing the scrcpy command and encrypt it with your secret key. The script will then start ngrok to create a tunnel to the local port where the fragmented PDF payload is being served. Finally, the script will open the fragmented PDF file automatically in the background.
 
-    ngrok
-    pdftk
-    scrcpy
+Troubleshooting
+If you are having trouble getting the script to work, please try the following:
+
+Make sure that you have ngrok, scrcpy, and openvpn (optional) installed.
+Make sure that the two PDF files that you want to combine are located in the paths specified by the pdf_file_1 and pdf_file_2 variables.
+Make sure that your secret key is correct.
+Try restarting your computer.
