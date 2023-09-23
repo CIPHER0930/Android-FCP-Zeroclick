@@ -1,25 +1,20 @@
-ANDROID FCP-Zeroclick
-This bash script automates the process of remotely controlling an Android device using scrcpy and ngrok. It creates a fragmented PDF payload that contains the scrcpy command and encrypts it with a secret key. The script then starts ngrok to create a tunnel to the local port where the fragmented PDF payload is being served. Finally, the script opens the fragmented PDF file automatically in the background.
 
-Usage
-./FCP-Zeroclick-Update.sh
-Requirements
+To run the zeroclick.sh script, you will need to have the following dependencies installed:
+
 ngrok
-scrcpy
-openvpn (optional)
-Instructions
-Replace the YOUR_SECRET_KEY placeholder in the script with your own secret key.
-Replace the YOUR_VPN_CONFIG_FILE placeholder in the script with the path to your VPN configuration file, if you are using a VPN.
-Make sure that the two PDF files that you want to combine are located in the paths specified by the pdf_file_1 and pdf_file_2 variables.
-Run the script.
-Example
-./FCP-Zeroclick-Update.sh
-This will create a fragmented PDF payload containing the scrcpy command and encrypt it with your secret key. The script will then start ngrok to create a tunnel to the local port where the fragmented PDF payload is being served. Finally, the script will open the fragmented PDF file automatically in the background.
+pdftk
+openssl
+Once you have installed the dependencies, you can run the script as follows:
 
-Troubleshooting
-If you are having trouble getting the script to work, please try the following:
+./zeroclick.sh <android_device_ip> <pdf_file_1> <pdf_file_2>
+Where:
 
-Make sure that you have ngrok, scrcpy, and openvpn (optional) installed.
-Make sure that the two PDF files that you want to combine are located in the paths specified by the pdf_file_1 and pdf_file_2 variables.
-Make sure that your secret key is correct.
-Try restarting your computer.
+<android_device_ip> is the IP address of the Android device that you want to mirror.
+<pdf_file_1> is the first part of the fragmented PDF payload.
+<pdf_file_2> is the second part of the fragmented PDF payload.
+The script will start a scrcpy session with the Android device and encrypt the PDF payload with AES-256. It will then deliver the encrypted PDF payload to the target using the ngrok tunnel.
+
+Example:
+
+./zeroclick.sh 192.168.1.100 payload.pdf.part1 payload.pdf.part2
+This will start a scrcpy session with the Android device at 192.168.1.100 and encrypt the PDF payload consisting of the files payload.pdf.part1 and payload.pdf.part2. The encrypted PDF payload will then be delivered to the target using the ngrok tunnel.
