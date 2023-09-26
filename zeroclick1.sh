@@ -11,7 +11,7 @@ echo "
 # This script mirrors an Android device using scrcpy and delivers the payload in a fragmented PDF file.
 
 # Usage:
-# ./android_fcp_zeroclick.sh <android_device_ip> <pdf_file_1> <pdf_file_2>
+# ./zeroclick1.sh <android_device_ip> <pdf_file_1> <pdf_file_2>
 
 # Variables
 android_device_ip=$1
